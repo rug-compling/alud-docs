@@ -6,6 +6,9 @@ theme:
     palette:
         primary: blue grey
     favicon: favicon.ico
+    logo: favicon.png
+    features:
+        - navigation.tabs
 
 extra_css:
     - css/extra.css

@@ -1,0 +1,36 @@
+site_name: Alpino & Universal Dependencies
+
+theme:
+    name: material
+    language: nl
+    palette:
+        primary: blue grey
+    favicon: favicon.ico
+
+extra_css:
+    - css/extra.css
+
+markdown_extensions:
+    - admonition
+    - attr_list
+    - pymdownx.caret
+    - toc:
+        permalink: true
+        toc_depth: 4
+
+plugins:
+    - search:
+        lang: du
+
+extra:
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/rug-compling/paqu-cookbook
+          name: This documentation on GitHub
+
+nav:
+    - 'Introduction': 'index.md'
+    - 'Cookbook Alpino': 'alpino.md'
+    - 'Cookbook UD': 'ud.md'
+    - 'Cookbook Alpino + UD': 'alpinoud.md'
+    - 'Links': 'links.md'

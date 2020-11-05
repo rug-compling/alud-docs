@@ -4,7 +4,7 @@
 
 ### Zoeken naar specifieke dependentierelaties
 
-```text
+```xquery
 //nsubj
 ```
 
@@ -15,7 +15,7 @@ wordt in de XML representatie als attribuut gerepresenteerd. Om te
 zoeken naar subjecten die als `UPOS` de waarde `PRON` hebben kun je dus de
 volgende query formuleren:
 
-```text
+```xquery
 //nsubj[@upos="PRON"]
 ```
 
@@ -23,14 +23,14 @@ De dependentierelaties tussen woorden worden in de XML representatie
 hierarchisch gerepresenteerd. Om te zoeken naar een woord dat als amod
 van een onderwerp optreedt specificeer je:
 
-```text
+```xquery
 //nsubj/amod
 ```
 
 En je kunt dus ook verder gaan en zoeken naar woorden die als advmod
 van een amod van een subject optreden:
 
-```text
+```xquery
 //nsubj/amod/advmod
 ```
 
@@ -45,13 +45,13 @@ part-of-speech zoals `pt`, `postag`, `getal`, `naamval`, `persoon`, ...
 Je kunt dus onderzoeken of er gevallen zijn waarbij de UD postag
 afwijkt van de Lassy postag. Bijvoorbeeld:
 
-```text
+```xquery
 //*[@upos="PRON" and not(@pt="vnw")]
 ```
 
 of
 
-```text
+```xquery
 //*[@pt="vnw" and not(@upos="PRON")]
 ```
 
@@ -67,14 +67,14 @@ van de `*` wildcard. Om te zoeken naar een specifiek woord, zonder dat
 je eisen stelt aan de relatie waarin dat woord voorkomt, kun je dit
 doen:
 
-```text
+```xquery
 //*[@lemma=("eten","op_eten")]
 ```
 
 Natuurlijk kun je vervolgens ook alle objecten van zo’n woord vinden.
 Bijvoorbeeld, welke dingen worden zoal gegeten:
 
-```text
+```xquery
 //*[@lemma=("eten","op_eten")]/obj[@upos="NOUN"]
 ```
 
@@ -89,19 +89,19 @@ maken van de functie name(). De functie name() verwijst naar de naam
 van het element (dus de dependentierelatie). Zo kun je zoeken naar
 alle dependentierelaties behalve nmod:
 
-```text
+```xquery
 //*[not(name() = "nmod") ]
 ```
 
 Of naar ofwel nmod ofwel amod:
 
-```text
+```xquery
 //*[name() = "nmod" or name() = "amod" ]
 ```
 
 Dit kun je ook zo opschrijven:
 
-```text
+```xquery
 //(nmod|amod)
 ```
 
@@ -115,6 +115,6 @@ een possesief heeft de relatie `nmod:poss`. In de XML notatie zoeken we
 dus naar het element nmod. De informatie dat het om `poss` gaat wordt
 weergegeven als waarde van het attribuut `deprel_aux`:
 
-```text
+```xquery
 //nmod[@deprel_aux="poss"]
 ```

@@ -2,13 +2,13 @@
 
 ## Zoeken naar nominalisaties van copula-constructies
 
-```text
+```xquery
 //node[@cat="np" and node[@rel="hd"]/ud[@deprel_main="cop"]]
 ```
 
 ## Vind de *weer*-werkwoorden
 
-```text
+```xquery
 //node[
     @pt="ww" and
     ud[not(@deprel_main="aux")] and
@@ -21,6 +21,6 @@
 
 ## Voorzetseluitdrukkingen
 
-```text
+```xquery
 //node[@cat="mwu" and node[@pt="vz"] and node/ud[@deprel_main="case"]]
 ```

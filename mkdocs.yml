@@ -5,8 +5,8 @@ theme:
     language: nl
     palette:
         primary: blue grey
-    favicon: favicon.ico
-    logo: favicon.png
+    #favicon: favicon.ico
+    #logo: favicon.png
     features:
         - navigation.tabs
 

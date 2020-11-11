@@ -1,3 +1,3 @@
-# paqu-cookbook
+# alud-docs
 
-[Cookbook](https://urd2.let.rug.nl/~kleiweg/paqu-cookbook/) voor [PaQu](https://www.let.rug.nl/alfa/paqu)
+[Documentatie](https://urd2.let.rug.nl/~alud/) voor [alud](https://github.com/rug-compling/alud)

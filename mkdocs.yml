@@ -30,7 +30,7 @@ plugins:
 extra:
     social:
         - icon: fontawesome/brands/github
-          link: https://github.com/rug-compling/paqu-cookbook
+          link: https://github.com/rug-compling/alud-docs
           name: This documentation on GitHub
 
 nav:

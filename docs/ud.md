@@ -107,7 +107,7 @@ Dit kun je ook zo opschrijven:
 
 ### Possessieven
 
-Possesieven worden niet als zodanig in de Lassy annotatie herkend. In
+Possessieven worden niet als zodanig in de Lassy annotatie herkend. In
 de mapping naar UD wordt een poging gedaan om dit onderscheid alsnog
 automatisch terug te vinden. Daarom kun je in het UD deel van de
 annotatie makkelijk naar possesieven zoeken. In standaard UD notatie,

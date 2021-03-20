@@ -118,3 +118,28 @@ weergegeven als waarde van het attribuut `deprel_aux`:
 ```xquery
 //nmod[@deprel_aux="poss"]
 ```
+
+### TODO
+
+Which words occur as copula?
+
+```xquery
+//cop
+```
+Which are the verbs that *minister* occurs with as a subject?
+
+```xquery
+//root[@upos="VERB" and nsubj[@lemma="minister"]]
+```
+
+With which prepositions does *Groningen* occur?
+
+```xquery
+//*[@lemma="Groningen"]/case
+```
+
+Which are the dependents of adjectives?
+
+```xquery
+//*[@upos="ADJ"]/*[@upos]
+```

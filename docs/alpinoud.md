@@ -24,3 +24,28 @@
 ```xquery
 //node[@cat="mwu" and node[@pt="vz"] and node/ud[@deprel_main="case"]]
 ```
+
+## TODO
+
+All words (count pt and upos), to compare Lassy postag, and UD’s upos
+
+```xquery
+//node[@pt]
+```
+
+Are there inconsistencies in postag for determiners?
+
+```xquery
+//node[ud[@upos="DET"]]
+```
+
+Are words which function as ADVMOD of an adjective always an adverb?
+
+```xquery
+//node[node[@rel="hd" and @pt="adj"]]/node[ud[@deprel="advmod"]]
+```
+
+And which of these are verbs?
+```xquery
+//node[node[@rel="hd" and @pt="adj"]]/node[ud[@deprel="advmod"] and @pt="ww"]
+```

@@ -8,7 +8,7 @@ See: [alpino_ds.dtd](https://github.com/rug-compling/Alpino/blob/master/Treebank
 
 ## Universal Dependencies
 
-### Represenatie van UD in XML
+### Representatie van UD in XML
 
 De UD informatie wordt aan de Alpino XML toegevoegd, en wel op meerdere manieren. De representatie is dus redundant. Dit is gedaan om het maken van queries te vereenvoudigen.
 De informatie wordt op drie plaatsen gerepresenteerd:

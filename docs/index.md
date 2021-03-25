@@ -16,11 +16,11 @@ De informatie wordt op drie plaatsen gerepresenteerd:
 2. de UD informatie wordt als apart <root> element als dochter van <alpino_ds> gerepresenteerd. Deze annotatielaag is vooral handig als je queries over de UD-laag wilt stellen en niet verwijst naar de informatie in de Lassy dependentie-annotatie
 3. de UD informatie van elk woord afzonderlijk wordt ook nog eens weergegeven als <ud> element, als dochter van de <node> van datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel naar UD-informatie als naar Lassy-informatie verwijzen.
 
-1. conllu
+#### conllu
 
 De conllu representatie volgt de standaarden van https://universaldependencies.org/format.html
 
-2. <root>
+#### root element
 
 De UD informatie word gerepresenteerd met het element <root>, als dochter van <alpino_ds>. Deze <root> dochter heeft een boom-structuur waarbij steeds voor elke dependency waar dit woord het hoofd van is een dochter element wordt gebruikt. De naam van het element is hetzelfde als het label van de dependency. De overige informatie zoals lemma en part-of-speech wordt met attributen weergegeven. Voor de volgende zin:
 
@@ -40,7 +40,7 @@ levert dit bijvoorbeeld het volgdende XML-fragment op voor de normale UD analyse
   </root>
 ```
 
-3. <ud> voor elk woord
+#### ud element per woord
 
 Voor elke lexicale knoop in de Lassy analyse (dus <node> met waardes voor onder andere postag, lemma, word) is er een speciaal <ud> element dat de UD informatie van het betreffende woord bevat. De lokale informatie zoals part-of-speech en lemma worden gerepresenteerd als attributen van <ud>. Ook het hoofd, en de dependency dat dit woord met haar hoofd heeft wordt hier gerepresenteerd. Daarnaast bevat <ud> dochter-elementen voor elk van de dependencies waarvan dit woord het hoofd is. Deze dochter elementen zijn van het type <dep>, en bevatten attributen die onder andere weergeven wat het label van de dependency is, en welk woord als dependent fungeert. Voor het hiervoor gegeven voorbeeld is dit het (vereenvoudigde) XML-fragment dat behoort bij het woord "kinderen":
   

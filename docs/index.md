@@ -1,4 +1,4 @@
-# Introduction
+# Introductie
 
 ## Lassy
 
@@ -7,6 +7,57 @@ See: [Lassy Syntactische Annotatie](http://www.let.rug.nl/vannoord/Lassy/sa-man_
 See: [alpino_ds.dtd](https://github.com/rug-compling/Alpino/blob/master/Treebank/alpino_ds.dtd)
 
 ## Universal Dependencies
+
+### Represenatie van UD in XML
+
+De UD informatie wordt aan de Alpino XML toegevoegd, en wel op meerdere manieren. De representatie is dus redundant. Dit is gedaan om het maken van queries te vereenvoudigen.
+De informatie wordt op drie plaatsen gerepresenteerd:
+1. de CONLLU representatie wordt als commentaar in de XML toegevoegd (dit zal normaliter niet voor queries worden gebruikt) 
+2. de UD informatie wordt als apart <root> element als dochter van <alpino_ds> gerepresenteerd. Deze annotatielaag is vooral handig als je queries over de UD-laag wilt stellen en niet verwijst naar de informatie in de Lassy dependentie-annotatie
+3. de UD informatie van elk woord afzonderlijk wordt ook nog eens weergegeven als <ud> element, als dochter van de <node> van datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel naar UD-informatie als naar Lassy-informatie verwijzen.
+
+1. conllu
+
+De conllu representatie volgt de standaarden van https://universaldependencies.org/format.html
+
+2. <root>
+
+De UD informatie word gerepresenteerd met het element <root>, als dochter van <alpino_ds>. Deze <root> dochter heeft een boom-structuur waarbij steeds voor elke dependency waar dit woord het hoofd van is een dochter element wordt gebruikt. De naam van het element is hetzelfde als het label van de dependency. De overige informatie zoals lemma en part-of-speech wordt met attributen weergegeven. Voor de volgende zin:
+
+> De kinderen lezen weinig boeken
+
+levert dit bijvoorbeeld het volgdende XML-fragment op voor de normale UD analyse (enkele minder relevante attributen (zoals de Lassy POS-tags die hier ook nog eens verschijnen) zijn verwijderd voor de leesbaarheid):
+
+```xml
+
+  <root ud="basic" id="3" form="lezen" lemma="lezen" upos="VERB" Number="Plur" Tense="Pres" VerbForm="Fin" head="0" deprel="root">
+    <nsubj ud="basic" id="2" form="kinderen" lemma="kind" upos="NOUN" Number="Plur" head="3" deprel="nsubj">
+      <det ud="basic" id="1" form="de" lemma="de" upos="DET" Definite="Def" head="2" deprel="det"/>
+    </nsubj>
+    <obj ud="basic" id="5" form="boeken" lemma="boek" upos="NOUN" Number="Plur" head="3" deprel="obj">
+      <det ud="basic" id="4" form="weinig" lemma="weinig" upos="DET" head="5" deprel="det"/>
+    </obj>
+  </root>
+```
+
+3. <ud> voor elk woord
+
+Voor elke lexicale knoop in de Lassy analyse (dus <node> met waardes voor onder andere postag, lemma, word) is er een speciaal <ud> element dat de UD informatie van het betreffende woord bevat. De lokale informatie zoals part-of-speech en lemma worden gerepresenteerd als attributen van <ud>. Ook het hoofd, en de dependency dat dit woord met haar hoofd heeft wordt hier gerepresenteerd. Daarnaast bevat <ud> dochter-elementen voor elk van de dependencies waarvan dit woord het hoofd is. Deze dochter elementen zijn van het type <dep>, en bevatten attributen die onder andere weergeven wat het label van de dependency is, en welk woord als dependent fungeert. Voor het hiervoor gegeven voorbeeld is dit het (vereenvoudigde) XML-fragment dat behoort bij het woord "kinderen":
+  
+```
+<node begin="1" end="2" id="4" lemma="kind" postag="N(soort,mv,basis)" rel="hd" word="kinderen">
+  <ud id="2" form="kinderen" lemma="kind" upos="NOUN" head="3" deprel="nsubj">
+    <dep id="2" head="3" deprel="nsubj"/>
+  </ud>
+</node>
+```  
+
+### Enhanced dependencies
+
+TODO
+
+
+Alles tezamen wordt het volgende voorbeeld als volgt in XML gerepresenteerd:
 
 > Het stormt en regent.
 

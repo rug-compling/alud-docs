@@ -28,6 +28,7 @@ In de volgende query gaan we op zoek naar de zogenaamde `weather verbs`. In UD k
 
 Volgens deze definitie blijkt ook het werkwoord `ontbreken` tot deze groep werkwoorden te horen, naast de "usual suspects" zoals `regenen`, `vriezen`, `sneeuwen`, `hagelen`, `motregenen`, `stormen`, `onweren`.
 
+Mocht je je afvragen wat de rol is van ingewikkelde laatste regel met negatie van een index waarde, dan kun je dezelfde query stellen waarbij je de 'not' simpelweg verwijdert. Het blijkt dan te gaan om voorlopige onderwerpen die in raising-to-subject gevallen als "gewoon" onderwerp fungeren van raising-to-subject werkwoorden (schijnen, laten, ...).
 
 ## Voorzetseluitdrukkingen
 

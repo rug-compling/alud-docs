@@ -2,7 +2,11 @@
 
 ## Introductie
 
+In deze paragraaf gaan we uit van het scenario dat je de UD annotatie wilt bevragen, zonder hierbij ook de hiërarchie van de Lassy annotatielaag te betrekken. We gebruiken dan de informatie die onder het element <root> is gerepresenteerd. Omdat de dependentie-labels als element worden gebruikt, en de dependentie-graaf als boom wordt gerepresenteerd zijn een aantal voor de hand liggende queries erg eenvoudig.
+
 ### Zoeken naar specifieke dependentierelaties
+
+De volgende query identificeert een 'nsubj' element, waar dan ook in het document:
 
 ```xquery
 //nsubj
@@ -12,8 +16,8 @@ De elementen in de XML representatie zijn dus de dependentierelaties
 van UD. De bovenstaande query geeft dus alle elementen terug die als
 onderwerp fungeren. De verdere informatie zoals de part-of-speech tag
 wordt in de XML representatie als attribuut gerepresenteerd. Om te
-zoeken naar subjecten die als `UPOS` de waarde `PRON` hebben kun je dus de
-volgende query formuleren:
+zoeken naar subjecten die aan bepaalde eisen voldoen, bijvoorbeeld dat de `UPOS` de waarde `PRON` moet hebben, kun je 
+attributen met de gewenste waarde in de query toevoegen:
 
 ```xquery
 //nsubj[@upos="PRON"]
@@ -105,7 +109,15 @@ Dit kun je ook zo opschrijven:
 //(nmod|amod)
 ```
 
-### Possessieven
+Merk op dat inmiddels de naam van de dependentie ook beschikbaar is via de attributen `deprel` en `deprel_main`.
+
+
+### Possessieven (gestructureerde dependency labels)
+
+Dependency labels worden weergegeven met het attribuut `deprel`. In UD worden de 
+labels soms getypeerd met een suffix `:type`. Om op de relatie dan wel op het
+subtype te kunnen zoeken gebruiken we hiervoor de twee attributen `deprel_main` en 
+`deprel_aux`.
 
 Possessieven worden niet als zodanig in de Lassy annotatie herkend. In
 de mapping naar UD wordt een poging gedaan om dit onderscheid alsnog
@@ -113,33 +125,79 @@ automatisch terug te vinden. Daarom kun je in het UD deel van de
 annotatie makkelijk naar possesieven zoeken. In standaard UD notatie,
 een possesief heeft de relatie `nmod:poss`. In de XML notatie zoeken we
 dus naar het element nmod. De informatie dat het om `poss` gaat wordt
-weergegeven als waarde van het attribuut `deprel_aux`:
+weergegeven als waarde van het attribuut `deprel_aux`. We hebben dus de volgende
+mogelijkheid om possesieven te zoeken:
+
+```xquery
+//nmod[@deprel="nmod:poss"]
+```
+
+Maar omdat het subtype `poss` alleen bij `nmod` lijkt voor te komen, kunnen we ook 
+volstaan met de volgende query:
 
 ```xquery
 //nmod[@deprel_aux="poss"]
 ```
 
-### TODO
+Als je álle nmod relaties wilt vinden, en de sub-typering dus wilt negeren kan dat
+met het attribuut `deprel_main`:
 
-Which words occur as copula?
+```xquery
+//nmod[@deprel_main="nmod"]
+```
+
+### Copula
+
+Welke woorden treden op als copula? Omdat in UD het predicatief complement het hoofd is, en het koppelwerkwoord selecteert, verwacht je voor deze query dus de koppelwerkwoorden te vinden:
 
 ```xquery
 //cop
 ```
-Which are the verbs that *minister* occurs with as a subject?
+
+De query die juist de predicatieve complementen selecteert is dan: een woord met
+een willekeurig label (vaak `root`) dat een copula selecteert:
+
+```xquery
+//*[cop]
+```
+
+### Wat doen ministers de hele dag?
+
+Geef de werkwoorden waarbij `minister` als onderwerp fungeert:
 
 ```xquery
 //root[@upos="VERB" and nsubj[@lemma="minister"]]
 ```
 
-With which prepositions does *Groningen* occur?
+Voor een corpus waarop wij deze query uitprobeerden waren de meest frequente lemma's: `willen`, `zeggen`, en `beloven`...
+
+### Wat doe je in Groningen?
+
+Geef de werkwoorden waarmee "in Groningen" voorkomt:
 
 ```xquery
-//*[@lemma="Groningen"]/case
+//*[@upos="VERB" and *[@lemma="Groningen"]/case[@lemma="in"]]
 ```
 
-Which are the dependents of adjectives?
+### Intensifiers
+
+Bijwoorden die adjectieven modificeren:
 
 ```xquery
-//*[@upos="ADJ"]/*[@upos]
+//*[@upos="ADJ"]/advmod[@upos="ADV"]
 ```
+
+Bij het make van dit voorbeeld vroeg ik me af met welke andere dependenties bijwoorden hier voor zouden kunnen komen.
+Dat kun je bevragen met deze query:
+
+```xquery
+//*[@upos="ADJ"]/*[@upos="ADV" and not(@deprel="advmod")]
+```
+
+Dat blijkt dus een heel gemengd gezelschap te zijn.
+
+
+
+
+
+

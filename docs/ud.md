@@ -187,7 +187,7 @@ Bijwoorden die adjectieven modificeren:
 //*[@upos="ADJ"]/advmod[@upos="ADV"]
 ```
 
-Bij het make van dit voorbeeld vroeg ik me af met welke andere dependenties bijwoorden hier voor zouden kunnen komen.
+Bij het maken van dit voorbeeld vroeg ik me af met welke andere dependenties bijwoorden hier voor zouden kunnen komen.
 Dat kun je bevragen met deze query:
 
 ```xquery

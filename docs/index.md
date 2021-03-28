@@ -26,11 +26,16 @@ De informatie wordt op drie plaatsen gerepresenteerd:
     datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel
     naar UD-informatie als naar Lassy-informatie verwijzen.
 
+
 #### CoNLL-U
 
 De representatie volgt [deze standaarden voor CoNLLL-U](https://universaldependencies.org/format.html)
 
-#### root element
+#### Element `<conllu>`
+
+TODO: status, auto, error
+
+#### Element `<root>`
 
 De UD informatie word gerepresenteerd met het element `<root>` (twee
 keer, zie beneden), als
@@ -114,7 +119,7 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
 
-#### ud element per woord
+#### Elementen `ud` en `dep` per woord
 
 Voor elke lexicale knoop in de Lassy analyse (dus `<node>` met waardes
 voor onder andere postag, lemma, word) is er een speciaal `<ud>`

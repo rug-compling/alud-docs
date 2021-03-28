@@ -161,7 +161,12 @@ waar `<node>` naar verwijst. In dit geval heeft `<dep>` ook het
 attribuut `elided`, zoals hier:
 
 ```xml
-<dep id="5.1" elided="true" ... />
+<node end="3" ... >
+  <ud id="3" ... >
+    <dep id="3" ... />
+    <dep id="5.1" elided="true" .../>
+  </ud>
+</node>
 ```
 
 TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat

@@ -10,23 +10,44 @@ See: [alpino_ds.dtd](https://github.com/rug-compling/Alpino/blob/master/Treebank
 
 ### Representatie van UD in XML
 
-De UD informatie wordt aan de Alpino XML toegevoegd, en wel op meerdere manieren. De representatie is dus redundant. Dit is gedaan om het maken van queries te vereenvoudigen.
+De UD informatie wordt aan de Alpino XML toegevoegd, en wel op
+meerdere manieren. De representatie is dus redundant. Dit is gedaan om
+het maken van queries te vereenvoudigen.
 De informatie wordt op drie plaatsen gerepresenteerd:
-1. de CONLLU representatie wordt als commentaar in de XML toegevoegd (dit zal normaliter niet voor queries worden gebruikt) 
-2. de UD informatie wordt als apart <root> element als dochter van <alpino_ds> gerepresenteerd. Deze annotatielaag is vooral handig als je queries over de UD-laag wilt stellen en niet verwijst naar de informatie in de Lassy dependentie-annotatie
-3. de UD informatie van elk woord afzonderlijk wordt ook nog eens weergegeven als <ud> element, als dochter van de <node> van datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel naar UD-informatie als naar Lassy-informatie verwijzen.
 
-#### conllu
+ 1. de CoNLL-U representatie wordt als commentaar in de XML toegevoegd
+    (dit zal normaliter niet voor queries worden gebruikt)
+ 2. de UD informatie wordt als apart `<root>` element als dochter van
+    `<alpino_ds>` gerepresenteerd. Deze annotatielaag is vooral handig
+    als je queries over de UD-laag wilt stellen en niet verwijst naar
+    de informatie in de Lassy dependentie-annotatie
+ 3. de UD informatie van elk woord afzonderlijk wordt ook nog eens
+    weergegeven als `<ud>` element, als dochter van de `<node>` van
+    datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel
+    naar UD-informatie als naar Lassy-informatie verwijzen.
 
-De conllu representatie volgt de standaarden van https://universaldependencies.org/format.html
+#### CoNLL-U
+
+De representatie volgt [deze standaarden voor CoNLLL-U](https://universaldependencies.org/format.html)
 
 #### root element
 
-De UD informatie word gerepresenteerd met het element <root>, als dochter van <alpino_ds>. Deze <root> dochter heeft een boom-structuur waarbij steeds voor elke dependency waar dit woord het hoofd van is een dochter element wordt gebruikt. De naam van het element is hetzelfde als het label van de dependency. De overige informatie zoals lemma en part-of-speech wordt met attributen weergegeven. Voor de volgende zin:
+De UD informatie word gerepresenteerd met het element `<root>` (twee
+keer, zie beneden), als
+dochter van `<alpino_ds>`. Deze `<root>` dochter heeft een
+boom-structuur waarbij steeds voor elke dependency waar dit woord het
+hoofd van is een dochter element wordt gebruikt. De naam van het
+element is hetzelfde als het label van de dependency (minus een
+eventueel deel dat begin met een dubbele punt). De overige
+informatie zoals lemma en part-of-speech wordt met attributen
+weergegeven. Voor de volgende zin:
 
 > De kinderen lezen weinig boeken
 
-levert dit bijvoorbeeld het volgdende XML-fragment op voor de normale UD analyse (enkele minder relevante attributen (zoals de Lassy POS-tags die hier ook nog eens verschijnen) zijn verwijderd voor de leesbaarheid):
+levert dit bijvoorbeeld het volgdende XML-fragment op voor de normale
+UD analyse (enkele minder relevante attributen (zoals de Lassy
+POS-tags die hier ook nog eens verschijnen) zijn verwijderd voor de
+leesbaarheid):
 
 ```xml
 
@@ -40,21 +61,113 @@ levert dit bijvoorbeeld het volgdende XML-fragment op voor de normale UD analyse
   </root>
 ```
 
+Elk element bevat het attribuut `deprel` waarvan de waarde vaak gelijk
+is aan de naam van het element. Maar soms gaat het om een dependency
+met een samengestelde naam, zoals `conj:en`. In dit geval heeft het
+attribuut `deprel` de volledige naam, en is er een attribuut
+`deprel_aux` met alleen het deel na de dubbele punt:
+
+
+```xml
+<conj deprel="conj:en" deprel_aux="en" ... >
+```
+
+Het hoofd-element `<alpino_ds>` heeft twee keer een `<root>` als dochter.
+
+Onder
+de eerste `<root>` worden de standaard dependency-relaties
+gerepresenteerd (gebaseerd op de kolommen `HEAD` en `DEPREL` in het
+CoNLL-U-formaat). Elk element heeft hier het attribuut `ud="basic"`.
+
+Onder de tweede `<root>` worden de enhanced dependency-relaties
+gerepresenteerd (gebaseerd op de kolom `DEPS` in het
+CoNLL-U-formaat).  Elk element heeft hier het attribuut `ud="enhanced"`.
+
+```xml
+<alpino_ds>
+
+  <root ud="basic" ... >
+   <nsubj ud="basic" ... > ... </nsubj>
+
+  </root>
+
+  <root ud="enhanced" ... >
+   <nsubj ud="enhanced" ... > ... </nsubj>
+
+  </root>
+
+</alpino_ds>
+```
+
+
+Enhanced dependencies kunnen lussen bevatten, waardoor deze niet
+volledig als een boom zijn weer te gegeven. In zulke gevallen wordt bij het
+vormen van de boom de lus een paar keer doorlopen om langere xpath-queries in
+meerdere richtingen mogelijk te maken. Maar na een paar niveaus wordt
+deze recursie onderbroken. Dit wordt aangegeven met het attribuut
+`recursion_limit`, zoals hier:
+
+```xml
+<obj ud="enhanced" recursion_limit="TOO DEEP" ... />
+```
+
+TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
+aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
+
 #### ud element per woord
 
-Voor elke lexicale knoop in de Lassy analyse (dus <node> met waardes voor onder andere postag, lemma, word) is er een speciaal <ud> element dat de UD informatie van het betreffende woord bevat. De lokale informatie zoals part-of-speech en lemma worden gerepresenteerd als attributen van <ud>. Ook het hoofd, en de dependency dat dit woord met haar hoofd heeft wordt hier gerepresenteerd. Daarnaast bevat <ud> dochter-elementen voor elk van de dependencies waarvan dit woord het hoofd is. Deze dochter elementen zijn van het type <dep>, en bevatten attributen die onder andere weergeven wat het label van de dependency is, en welk woord als dependent fungeert. Voor het hiervoor gegeven voorbeeld is dit het (vereenvoudigde) XML-fragment dat behoort bij het woord "kinderen":
-  
-```
+Voor elke lexicale knoop in de Lassy analyse (dus `<node>` met waardes
+voor onder andere postag, lemma, word) is er een speciaal `<ud>`
+element dat de UD informatie van het betreffende woord bevat. De
+lokale informatie zoals part-of-speech en lemma worden gerepresenteerd
+als attributen van `<ud>`. Ook het hoofd, en de dependency dat dit
+woord met haar hoofd heeft wordt hier gerepresenteerd. Daarnaast bevat
+`<ud>` dochter-elementen `<dep>`, een voor elk van de **enhanced** dependencies waarvan dit woord
+het hoofd is.  Voor het hiervoor
+gegeven voorbeeld is dit het (vereenvoudigde) XML-fragment dat behoort
+bij het woord "kinderen":
+
+
+```xml
 <node begin="1" end="2" id="4" lemma="kind" postag="N(soort,mv,basis)" rel="hd" word="kinderen">
-  <ud id="2" form="kinderen" lemma="kind" upos="NOUN" head="3" deprel="nsubj">
-    <dep id="2" head="3" deprel="nsubj"/>
+  <ud id="2" form="kinderen" lemma="kind" upos="NOUN" head="3" deprel="nsubj" deprel_main="nsubj">
+    <dep id="2" head="3" deprel="nsubj" deprel_main="nsubj"/>
   </ud>
 </node>
-```  
+```
 
-### Enhanced dependencies
+Zowel `<ud>` als `<dep>` heeft een attribuut `deprel` dat de
+volledige naam van de dependency bevat. Het attribuut `deprel_main` heeft als waarde
+het eerste deel van de naam van de dependency wanneer het om een
+samengestelde naam gaat, of is gelijk aan `deprel` als het geen
+samengestelde naam is. Wanneer het wel om een samengestelde naam gaat,
+dan is er een attribuut `deprel_aux` dat het tweede deel van de naam
+bevat. Bijvoorbeeld:
 
-TODO
+```xml
+<ud ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt">
+  <dep ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt"/>
+</ud>
+```
+
+Het waarde van het attribuut `id` van het element `<ud>` is altijd
+gelijk aan de waarde van het attribuut `end` van het element `<node>`.
+Dit is het woord-index, `ID` in het CoNLL-U-formaat.
+
+Voor het attribuut `id` van het element `<dep>` geldt hetzelfde, maar
+soms is er een afwijkende waarde, met een punt er in. Hier gaat het om
+een relatie van een ingevoegd woord dan een kopie is van het woord
+waar `<node>` naar verwijst. In dit geval heeft `<dep>` ook het
+attribuut `elided`, zoals hier:
+
+```xml
+<dep id="5.1" elided="true" ... />
+```
+
+TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
+aangegeven hoe die info wordt opgenomen in `<ud>` en `<dep>`.
+
+
 
 
 Alles tezamen wordt het volgende voorbeeld als volgt in XML gerepresenteerd:
@@ -176,8 +289,15 @@ Alles tezamen wordt het volgende voorbeeld als volgt in XML gerepresenteerd:
 </alpino_ds>
 ```
 
+
+
 ![boom](storm-regen-tree.png)
 
+Standaard dependency-relaties:
+
 ![UD](storm-regen-ud.png)
+
+Enhanced dependency-relaties, waarin de verschillen met de vorige
+figuur blauw zijn gemarkeerd:
 
 ![EUD](storm-regen-eud.png)

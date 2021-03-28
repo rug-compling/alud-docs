@@ -119,7 +119,7 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
 
-#### Elementen `ud` en `dep` per woord
+#### Elementen `<ud>` en `<dep>` per woord
 
 Voor elke lexicale knoop in de Lassy analyse (dus `<node>` met waardes
 voor onder andere postag, lemma, word) is er een speciaal `<ud>`

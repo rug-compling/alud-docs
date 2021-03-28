@@ -34,7 +34,7 @@ extra:
           name: This documentation on GitHub
 
 nav:
-    - 'Introduction': 'index.md'
+    - 'Introductie': 'index.md'
     - 'Cookbook Alpino': 'alpino.md'
     - 'Cookbook UD': 'ud.md'
     - 'Cookbook Alpino + UD': 'alpinoud.md'

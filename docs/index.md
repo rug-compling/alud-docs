@@ -80,7 +80,7 @@ attribuut `deprel` de volledige naam, en is er een attribuut
 Het hoofd-element `<alpino_ds>` heeft twee keer een `<root>` als dochter.
 
 Onder
-de eerste `<root>` worden de standaard dependency-relaties
+de eerste `<root>` worden de basic dependency-relaties
 gerepresenteerd (gebaseerd op de kolommen `HEAD` en `DEPREL` in het
 CoNLL-U-formaat). Elk element heeft hier het attribuut `ud="basic"`.
 
@@ -303,7 +303,7 @@ Alles tezamen wordt het volgende voorbeeld als volgt in XML gerepresenteerd:
 
 ![boom](storm-regen-tree.png)
 
-Standaard dependency-relaties:
+Basic dependency-relaties:
 
 ![UD](storm-regen-ud.png)
 

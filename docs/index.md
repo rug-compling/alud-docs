@@ -15,7 +15,7 @@ meerdere manieren. De representatie is dus redundant. Dit is gedaan om
 het maken van queries te vereenvoudigen.
 De informatie wordt op drie plaatsen gerepresenteerd:
 
- 1. de CoNLL-U representatie wordt als commentaar in de XML toegevoegd
+ 1. de CoNLL-U representatie wordt als tekst binnen het elemnt `<conllu>` toegevoegd
     (dit zal normaliter niet voor queries worden gebruikt)
  2. de UD informatie wordt als apart `<root>` element als dochter van
     `<alpino_ds>` gerepresenteerd. Deze annotatielaag is vooral handig
@@ -29,15 +29,17 @@ De informatie wordt op drie plaatsen gerepresenteerd:
 
 #### CoNLL-U
 
-De representatie volgt [deze standaarden voor CoNLLL-U](https://universaldependencies.org/format.html)
+De representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html)
 
 #### Element `<conllu>`
 
+Het conllu formaat wordt ingebed in de XML binnen het element `<conllu>`.
+Dit element heeft een aantal attributen: status, auto error.
 TODO: status, auto, error
 
 #### Element `<root>`
 
-De UD informatie word gerepresenteerd met het element `<root>` (twee
+De UD informatie wordt in een makkelijk doorzoekbare vorm gerepresenteerd met het element `<root>` (twee
 keer, zie beneden), als
 dochter van `<alpino_ds>`. Deze `<root>` dochter heeft een
 boom-structuur waarbij steeds voor elke dependency waar dit woord het
@@ -66,6 +68,8 @@ leesbaarheid):
   </root>
 ```
 
+##### Samengestelde dependency relaties
+
 Elk element bevat het attribuut `deprel` waarvan de waarde vaak gelijk
 is aan de naam van het element. Maar soms gaat het om een dependency
 met een samengestelde naam, zoals `conj:en`. In dit geval heeft het
@@ -77,10 +81,11 @@ attribuut `deprel` de volledige naam, en is er een attribuut
 <conj deprel="conj:en" deprel_aux="en" ... >
 ```
 
+##### Basic en enhanced dependencies
+
 Het hoofd-element `<alpino_ds>` heeft twee keer een `<root>` als dochter.
 
-Onder
-de eerste `<root>` worden de basic dependency-relaties
+Onder de eerste `<root>` worden de basic dependency-relaties
 gerepresenteerd (gebaseerd op de kolommen `HEAD` en `DEPREL` in het
 CoNLL-U-formaat). Elk element heeft hier het attribuut `ud="basic"`.
 
@@ -104,6 +109,7 @@ CoNLL-U-formaat).  Elk element heeft hier het attribuut `ud="enhanced"`.
 </alpino_ds>
 ```
 
+##### Enhanced dependencies
 
 Enhanced dependencies kunnen lussen bevatten, waardoor deze niet
 volledig als een boom zijn weer te gegeven. In zulke gevallen wordt bij het
@@ -119,15 +125,26 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
 
-#### Elementen `<ud>` en `<dep>` per woord
+#### Elementen `<ud>` per woord
+
+Naast de hierboven gepresenteerde representatie van de UD informatie wordt
+diezelfde informatie op een redundante manier ook gerepresenteerd als
+dochters van de lexicale knopen in de Lassy analyse.
 
 Voor elke lexicale knoop in de Lassy analyse (dus `<node>` met waardes
 voor onder andere postag, lemma, word) is er een speciaal `<ud>`
 element dat de UD informatie van het betreffende woord bevat. De
 lokale informatie zoals part-of-speech en lemma worden gerepresenteerd
 als attributen van `<ud>`. Ook het hoofd, en de dependency dat dit
-woord met haar hoofd heeft wordt hier gerepresenteerd. Daarnaast bevat
-`<ud>` dochter-elementen `<dep>`, een voor elk van de **enhanced** dependencies waarvan dit woord
+woord met haar hoofd heeft wordt hier gerepresenteerd. 
+
+De waarde van het attribuut `id` van het element `<ud>` is altijd
+gelijk aan de waarde van het attribuut `end` van het element `<node>`.
+Dit is het woord-index, `ID` in het CoNLL-U-formaat.
+
+##### Enhanced dependencies: `<dep` per woord
+
+Daarnaast bevat `<ud>` dochter-elementen `<dep>`, een voor elk van de **enhanced** dependencies waarvan dit woord
 het hoofd is.  Voor het hiervoor
 gegeven voorbeeld is dit het (vereenvoudigde) XML-fragment dat behoort
 bij het woord "kinderen":
@@ -140,6 +157,8 @@ bij het woord "kinderen":
   </ud>
 </node>
 ```
+
+##### Samengestelde dependency relaties
 
 Zowel `<ud>` als `<dep>` heeft een attribuut `deprel` dat de
 volledige naam van de dependency bevat. Het attribuut `deprel_main` heeft als waarde
@@ -155,9 +174,9 @@ bevat. Bijvoorbeeld:
 </ud>
 ```
 
-Het waarde van het attribuut `id` van het element `<ud>` is altijd
-gelijk aan de waarde van het attribuut `end` van het element `<node>`.
-Dit is het woord-index, `ID` in het CoNLL-U-formaat.
+
+
+##### Ingevoegde woorden in enhanced dependencies
 
 Voor het attribuut `id` van het element `<dep>` geldt hetzelfde, maar
 soms is er een afwijkende waarde, met een punt er in. Hier gaat het om
@@ -178,7 +197,7 @@ TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<ud>` en `<dep>`.
 
 
-
+#### Compleet voorbeeld
 
 Alles tezamen wordt het volgende voorbeeld als volgt in XML gerepresenteerd:
 

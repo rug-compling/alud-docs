@@ -142,7 +142,7 @@ De waarde van het attribuut `id` van het element `<ud>` is altijd
 gelijk aan de waarde van het attribuut `end` van het element `<node>`.
 Dit is het woord-index, `ID` in het CoNLL-U-formaat.
 
-##### Enhanced dependencies: `<dep` per woord
+##### Enhanced dependencies: `<dep>` per woord
 
 Daarnaast bevat `<ud>` dochter-elementen `<dep>`, een voor elk van de **enhanced** dependencies waarvan dit woord
 het hoofd is.  Voor het hiervoor

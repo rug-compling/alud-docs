@@ -15,7 +15,7 @@ meerdere manieren. De representatie is dus redundant. Dit is gedaan om
 het maken van queries te vereenvoudigen.
 De informatie wordt op drie plaatsen gerepresenteerd:
 
- 1. de CoNLL-U representatie wordt als tekst binnen het elemnt `<conllu>` toegevoegd
+ 1. de CoNLL-U representatie wordt als tekst binnen het element `<conllu>` toegevoegd
     (dit zal normaliter niet voor queries worden gebruikt)
  2. de UD informatie wordt als apart `<root>` element als dochter van
     `<alpino_ds>` gerepresenteerd. Deze annotatielaag is vooral handig
@@ -26,16 +26,13 @@ De informatie wordt op drie plaatsen gerepresenteerd:
     datzelfde woord. Deze werkwijze vereenvoudigt queries die zowel
     naar UD-informatie als naar Lassy-informatie verwijzen.
 
-
-#### CoNLL-U
-
-De representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html)
-
 #### Element `<conllu>`
 
-Het conllu formaat wordt ingebed in de XML binnen het element `<conllu>`.
-Dit element heeft een aantal attributen: status, auto error.
-TODO: status, auto, error
+De tekstuele CONLL-U representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html)
+De tekst wordt ingebed in de XML binnen het element `<conllu>`. Dit element heeft een aantal attributen: status, auto en error.
+Deze attributen geven aan hoe de conversie naar UD heeft plaatsgevonden, en welke eventuele fouten hierbij zijn opgetreden.
+
+TODO PK: preciese waardes voor attributen status, auto, error
 
 #### Element `<root>`
 
@@ -122,7 +119,7 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 <obj ud="enhanced" recursion_limit="TOO DEEP" ... />
 ```
 
-TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
+TODO PK: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
 
 #### Elementen `<ud>` per woord
@@ -134,13 +131,22 @@ dochters van de lexicale knopen in de Lassy analyse.
 Voor elke lexicale knoop in de Lassy analyse (dus `<node>` met waardes
 voor onder andere postag, lemma, word) is er een speciaal `<ud>`
 element dat de UD informatie van het betreffende woord bevat. De
-lokale informatie zoals part-of-speech en lemma worden gerepresenteerd
-als attributen van `<ud>`. Ook het hoofd, en de dependency dat dit
+lokale informatie zoals part-of-speech en lemma wordt gerepresenteerd
+als attributen van `<ud>`. Ook het hoofd, en de naam van de dependency dat dit
 woord met haar hoofd heeft wordt hier gerepresenteerd. 
 
 De waarde van het attribuut `id` van het element `<ud>` is altijd
 gelijk aan de waarde van het attribuut `end` van het element `<node>`.
 Dit is het woord-index, `ID` in het CoNLL-U-formaat.
+
+Dit ziet er dus schematisch als volgt uit voor het woord "kinderen" uit het eerder gegeven voorbeeld:
+```xml
+<node begin="1" end="2" id="4" lemma="kind" postag="N(soort,mv,basis)" rel="hd" word="kinderen">
+  <ud id="2" form="kinderen" lemma="kind" upos="NOUN" head="3" deprel="nsubj" deprel_main="nsubj">
+   ...
+  </ud>
+</node>
+```
 
 ##### Enhanced dependencies: `<dep>` per woord
 
@@ -169,12 +175,10 @@ dan is er een attribuut `deprel_aux` dat het tweede deel van de naam
 bevat. Bijvoorbeeld:
 
 ```xml
-<ud ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt">
-  <dep ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt"/>
+<ud ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt" ... >
+  <dep ... deprel="compound:prt" deprel_main="compound" deprel_aux="prt" ... />
 </ud>
 ```
-
-
 
 ##### Ingevoegde woorden in enhanced dependencies
 
@@ -193,7 +197,30 @@ attribuut `elided`, zoals hier:
 </node>
 ```
 
-TODO: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
+Deze ingevoegde woorden worden bijvoorbeeld gebruikt in elliptische constructies waar een woord optreedt als hoofd van
+twee woordgroepen. Een voorbeeld is de volgende zin uit Lassy Small:
+
+> De Britten maakten de Tortoise , de Amerikanen de T-95 .
+
+De analyse van dit voorbeeld volgens de enhanced dependency annotatielaag neemt aan dat `maakten` niet alleen het hoofd is van de eerste conjunct, maar ook fungeert
+als hoofd van `de Amerikanen` en `de T-95`. Dit wordt dus aangegeven als volgt (opnieuw wat vereenvoudigd), waarbij we ons hier beperken tot de informatie voor de woorden `maakten` en `Amerikanen`:
+
+```xml
+<node begin="2" end="3" index="1" lemma="maken" rel="hd" word="maakten">
+ <ud id="3" form="maakten" lemma="maken" upos="VERB" head="0" deprel="root">
+  <dep id="3" head="0" deprel="root"/>
+  <dep id="6.1" head="3" deprel="conj" elided="true"/>
+ </ud>
+</node>
+...
+<node begin="7" end="8" lemma="Amerikaan" rel="hd" word="Amerikanen">
+ <ud id="8" form="Amerikanen" lemma="Amerikaan" upos="PROPN" head="3" deprel="conj">
+  <dep id="8" head="6.1" deprel="nsubj"/>
+ </ud>
+</node>
+```xml
+
+TODO PK: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<ud>` en `<dep>`.
 
 

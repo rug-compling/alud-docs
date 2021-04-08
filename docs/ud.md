@@ -160,7 +160,7 @@ dan zal heel vaak zowel de standaard dependency annotatie matchen als de enhance
 //*[@lemma="op_treden" and @ud="basic"]/nsubj
 ```
 
-en dan blijkt dat er nog slechts 120 mathes overblijven. In PaQu is er een alternatieve manier om aan te geven dat alleen in de standaard UD of alleen in de enhanced UD gezocht moet worden door de corresponderende button onder het invoerveld van de query te selecteren.
+en dan blijkt dat er nog slechts 120 matches overblijven. In PaQu is er een alternatieve manier om aan te geven dat alleen in de standaard UD of alleen in de enhanced UD gezocht moet worden door de corresponderende button onder het invoerveld van de query te selecteren.
 
 ### Andere voorbeelden
 

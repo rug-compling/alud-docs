@@ -203,7 +203,11 @@ twee woordgroepen. Een voorbeeld is de volgende zin uit Lassy Small:
 > De Britten maakten de Tortoise , de Amerikanen de T-95 .
 
 De analyse van dit voorbeeld volgens de enhanced dependency annotatielaag neemt aan dat `maakten` niet alleen het hoofd is van de eerste conjunct, maar ook fungeert
-als hoofd van `de Amerikanen` en `de T-95`. Dit wordt dus aangegeven als volgt (opnieuw wat vereenvoudigd), waarbij we ons hier beperken tot de informatie voor de woorden `maakten` en `Amerikanen`:
+als hoofd van `de Amerikanen` en `de T-95`. Dit is de illustratie van de enhanced dependency analyse:
+
+![EUD](maaktenTortoise.png)
+
+Dit wordt dus aangegeven als volgt (opnieuw wat vereenvoudigd), waarbij we ons hier beperken tot de informatie voor de woorden `maakten` en `Amerikanen`:
 
 ```xml
 <node begin="2" end="3" index="1" lemma="maken" rel="hd" word="maakten">

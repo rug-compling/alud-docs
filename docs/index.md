@@ -218,7 +218,7 @@ als hoofd van `de Amerikanen` en `de T-95`. Dit wordt dus aangegeven als volgt (
   <dep id="8" head="6.1" deprel="nsubj"/>
  </ud>
 </node>
-```xml
+```
 
 TODO PK: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
 aangegeven hoe die info wordt opgenomen in `<ud>` en `<dep>`.

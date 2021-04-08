@@ -146,7 +146,25 @@ met het attribuut `deprel_main`:
 //nmod[@deprel_main="nmod"]
 ```
 
-### Copula
+### Zoeken in gewone of enhanced dependencies
+
+In de voorbeelden hierboven hebben we een complicatie genegeerd. Als we zoeken naar onderwerpen van het werkwoord "optreden":
+
+```xquery
+//*[@lemma="op_treden"]/nsubj
+```
+
+dan zal heel vaak zowel de standaard dependency annotatie matchen als de enhanced dependency annotatie. Dat is niet erg zolang we alleen geïnteresseerd zijn in matchende zinnen, maar dit levert een probleem op als we matches gaan tellen. De bovenstaande query levert 250 matches op in Lassy Klein, maar bijna alle hits komen daarbij dubbel voor. We kunnen expliciet aangeven dat we alleen in de standaard annotatielaag willen zoeken:
+
+```xquery
+//*[@lemma="op_treden" and @ud="basic"]/nsubj
+```
+
+en dan blijkt dat er nog slechts 120 mathes overblijven. In PaQu is er een alternatieve manier om aan te geven dat alleen in de standaard UD of alleen in de enhanced UD gezocht moet worden door de corresponderende button onder het invoerveld van de query te selecteren.
+
+### Andere voorbeelden
+
+#### Copula
 
 Welke woorden treden op als copula? Omdat in UD het predicatief complement het hoofd is, en het koppelwerkwoord selecteert, verwacht je voor deze query dus de koppelwerkwoorden te vinden:
 
@@ -161,7 +179,7 @@ een willekeurig label (vaak `root`) dat een copula selecteert:
 //*[cop]
 ```
 
-### Wat doen ministers de hele dag?
+#### Wat doen ministers de hele dag?
 
 Geef de werkwoorden waarbij `minister` als onderwerp fungeert:
 
@@ -171,7 +189,7 @@ Geef de werkwoorden waarbij `minister` als onderwerp fungeert:
 
 Voor een corpus waarop wij deze query uitprobeerden waren de meest frequente lemma's: `willen`, `zeggen`, en `beloven`...
 
-### Wat doe je in Groningen?
+#### Wat doe je in Groningen?
 
 Geef de werkwoorden waarmee "in Groningen" voorkomt:
 
@@ -179,7 +197,7 @@ Geef de werkwoorden waarmee "in Groningen" voorkomt:
 //*[@upos="VERB" and *[@lemma="Groningen"]/case[@lemma="in"]]
 ```
 
-### Intensifiers
+#### Intensifiers
 
 Bijwoorden die adjectieven modificeren:
 

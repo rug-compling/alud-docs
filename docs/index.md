@@ -119,8 +119,27 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 <obj ud="enhanced" recursion_limit="TOO DEEP" ... />
 ```
 
-TODO PK: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
-aangegeven hoe die info wordt opgenomen in `<root>` en daaronder.
+##### Samenvatting
+
+Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat in Alpino terecht komen.
+
+
+| kolom | veld   | voorbeeld  | | attribuut | voorbeeld |
+|------:|--------|------------|----|-----------|-----------|
+|   1   | ID     | 3          | | id        | `id="3"` |
+|       |        | 5.1        | | id        | `id="5.1"` |
+|   2   | FORM   | Het        | | form      | `form="Het"` |
+|   3   | LEMMA  | het        | | lemma     | `lemma="het"` |
+|   4   | UPOS   | PRON       | | upos      | `upos="PRON"` |
+|   5   | XPOS   | VNW\|pers\|pron | | *geen* | |
+|   6   | FEATS  | Person=3\|PronType=Prs | | *als gegeven, gesplitst* | `Person="3" PronType="Prs"` |
+|   7   | HEAD   | 2          | | head      | `head="2"` |
+|   8   | DEPREL | conj       | | *zie →*   | `<conj ud="basic" deprel="conj" >` |
+|       |        | conj:en    | | *zie →*   | `<conj ud="basic" deprel="conj:en" deprel_aux="en" >` |
+|   9   | DEPS   | 2:conj     | | *zie →*   | `<conj ud="enhanced" head="2" deprel="conj" >` |
+|       |        | 2:conj:en  | | *zie →*   | `<conj ud="enhanced" head="2" deprel="conj:en" deprel_aux="en" >` |
+|  10   | MISC   | SpaceAfter=No | | *geen* | |
+
 
 #### Elementen `<ud>` per woord
 
@@ -133,7 +152,7 @@ voor onder andere postag, lemma, word) is er een speciaal `<ud>`
 element dat de UD informatie van het betreffende woord bevat. De
 lokale informatie zoals part-of-speech en lemma wordt gerepresenteerd
 als attributen van `<ud>`. Ook het hoofd, en de naam van de dependency dat dit
-woord met haar hoofd heeft wordt hier gerepresenteerd. 
+woord met haar hoofd heeft wordt hier gerepresenteerd.
 
 De waarde van het attribuut `id` van het element `<ud>` is altijd
 gelijk aan de waarde van het attribuut `end` van het element `<node>`.
@@ -224,8 +243,25 @@ Dit wordt dus aangegeven als volgt (opnieuw wat vereenvoudigd), waarbij we ons h
 </node>
 ```
 
-TODO PK: tabel met daarin voor elke kolom uit het CoNLL-U-formaat
-aangegeven hoe die info wordt opgenomen in `<ud>` en `<dep>`.
+##### Samenvatting
+
+Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat in Alpino terecht komen.
+
+| kolom | veld   | voorbeeld  | | tag/attribuut | voorbeeld |
+|------:|--------|------------|----|------------|-----------|
+|   1   | ID     | 3          | | ud/id, dep/id | `<ud id="3" > <dep id="3"> </ud>` |
+|       |        | 5.1        | | dep/id+elided | `<ud > <dep id="5.1" elided="true"> </ud>` |
+|   2   | FORM   | Het        | | ud/form       | `<ud form="Het" >` |
+|   3   | LEMMA  | het        | | ud/lemma      | `<ud lemma="het" >` |
+|   4   | UPOS   | PRON       | | ud/upos       | `<ud upos="PRON" >` |
+|   5   | XPOS   | VNW\|pers\|pron | | *geen*   | |
+|   6   | FEATS  | Person=3\|PronType=Prs | | *als gegeven, gesplitst* | `<ud Person="3" PronType="Prs" >` |
+|   7   | HEAD   | 2          | | ud/head       | `<ud head="2" >` |
+|   8   | DEPREL | conj       | | ud/*zie →*    | `<ud="basic" deprel="conj" deprel_main="conj" >` |
+|       |        | conj:en    | | ud/*zie →*    | `<ud="basic" deprel="conj:en" deprel_main="conj" deprel_aux="en" >` |
+|   9   | DEPS   | 2:conj     | | dep/*zie →*   | `<ud> <dep head="2" deprel="conj" deprel_main="conj" > </ud>` |
+|       |        | 2:conj:en  | | dep/*zie →*   | `<ud> <dep head="2" deprel="conj:en" deprel_main="conj" deprel_aux="en" > </ud>` |
+|  10   | MISC   | SpaceAfter=No | | *geen*     | |
 
 
 #### Compleet voorbeeld

@@ -34,7 +34,7 @@ element heeft een aantal attributen: `status`, `error` en `auto`.
 Deze attributen geven aan hoe de conversie naar UD heeft plaatsgevonden, en welke eventuele fouten hierbij zijn opgetreden.
 
 Het attribuut `status` heeft de waarde `OK` als de conversie naar UD
-geslaagd is. De waarde `error` geeft aan de de conversie mislukt is.
+geslaagd is. De waarde `error` geeft aan dat de conversie mislukt is.
 
 Als de conversie mislukt is bevat het attribuut `error` een
 omschrijving van de fout die is opgetreden.

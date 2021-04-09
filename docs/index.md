@@ -28,7 +28,7 @@ De informatie wordt op drie plaatsen gerepresenteerd:
 
 #### Element `<conllu>`
 
-De tekstuele CONLL-U representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html)
+De tekstuele CONLL-U representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html).
 De tekst wordt ingebed in de XML binnen het element `<conllu>`. Dit element heeft een aantal attributen: status, auto en error.
 Deze attributen geven aan hoe de conversie naar UD heeft plaatsgevonden, en welke eventuele fouten hierbij zijn opgetreden.
 
@@ -121,7 +121,7 @@ deze recursie onderbroken. Dit wordt aangegeven met het attribuut
 
 ##### Samenvatting
 
-Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat in Alpino terecht komen.
+Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat waar in Alpino terecht komen.
 
 
 |         veld   | voorbeeld  |   attribuut | voorbeeld |
@@ -245,7 +245,7 @@ Dit wordt dus aangegeven als volgt (opnieuw wat vereenvoudigd), waarbij we ons h
 
 ##### Samenvatting
 
-Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat in Alpino terecht komen.
+Onderstaande tabel geeft een overzicht van welke elementen uit het CoNLL-U-formaat waar in Alpino terecht komen.
 
 |         veld   | voorbeeld  | tag/attribuut | voorbeeld |
 |----------------|------------|----------------|-----------|

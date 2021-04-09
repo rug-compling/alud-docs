@@ -29,10 +29,18 @@ De informatie wordt op drie plaatsen gerepresenteerd:
 #### Element `<conllu>`
 
 De tekstuele CONLL-U representatie volgt [deze standaarden voor CoNLL-U](https://universaldependencies.org/format.html).
-De tekst wordt ingebed in de XML binnen het element `<conllu>`. Dit element heeft een aantal attributen: status, auto en error.
+De tekst wordt ingebed in de XML binnen het element `<conllu>`. Dit
+element heeft een aantal attributen: `status`, `error` en `auto`.
 Deze attributen geven aan hoe de conversie naar UD heeft plaatsgevonden, en welke eventuele fouten hierbij zijn opgetreden.
 
-TODO PK: preciese waardes voor attributen status, auto, error
+Het attribuut `status` heeft de waarde `OK` als de conversie naar UD
+geslaagd is. De waarde `error` geeft aan de de conversie mislukt is.
+
+Als de conversie mislukt is bevat het attribuut `error` een
+omschrijving van de fout die is opgetreden.
+
+Wanneer de conversie automatisch is afgeleid, dan bevat het attribuut
+`auto` de naam en het versienummer van de voor de conversie gebruikte software.
 
 #### Element `<root>`
 

@@ -19,3 +19,11 @@ img[alt="permalink"] {
     border: 1px solid grey;
     float: left;
 }
+
+article a {
+    color: var(--md-accent-fg-color) !important;
+}
+
+article a:hover {
+    text-decoration: underline !important;
+}

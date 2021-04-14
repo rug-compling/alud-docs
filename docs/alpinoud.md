@@ -2,6 +2,8 @@
 
 In deze sectie laten we een aantal voorbeelden zien waarbij de queries naar zowel de Lassy annotatie-laag verwijzen als naar de UD laag. Sommige informatie is in de ene annotatielaag makkelijker of explicieter gecodeerd, zodat zo'n eclectische aanpak soms voordelen heeft.
 
+TODO: voorbeeld met `//dep[@elided]`
+
 ## Zoeken naar nominalisaties van copula-constructies
 
 Kun je koppelwerkwoorden met hun predicatieve complement nominaliseren? Jawel. In de volgende query gaan we op zoek naar een NP (die informatie heeft Lassy, maar is in UD niet direct beschikbaar). Van het hoofd van de NP eisen we dat die een `cop` dependency relatie heeft met zijn hoofd. Omdat we nu dus de UD annotatielaag bevragen via de Lassy annotatielaag kunnen we niet werken met iets als `/cop` maar moeten via `/ud` het attribuut `deprel` gebruiken:

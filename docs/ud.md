@@ -4,6 +4,8 @@
 
 In deze paragraaf gaan we uit van het scenario dat je de UD annotatie wilt bevragen, zonder hierbij ook de hiërarchie van de Lassy annotatielaag te betrekken. We gebruiken dan de informatie die onder het element <root> is gerepresenteerd. Omdat de dependentie-labels als element worden gebruikt, en de dependentie-graaf als boom wordt gerepresenteerd zijn een aantal voor de hand liggende queries erg eenvoudig.
 
+TODO: voorbeeld met `//*[@ud="enhanced" and contains(@id,".")]`
+
 ### Zoeken naar specifieke dependentierelaties
 
 De volgende query identificeert een 'nsubj' element, waar dan ook in het document:
